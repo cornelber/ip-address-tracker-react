@@ -1,0 +1,13 @@
+*,
+*::before,
+*::after {
+    font-family: $primary-font;
+}
+
+html {
+    font-size: 10px;
+}
+
+button {
+    cursor: pointer;
+}

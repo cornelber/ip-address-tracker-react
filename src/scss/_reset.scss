@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-y: hidden;
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+input {
+    border: none;
+    outline: none;
+}

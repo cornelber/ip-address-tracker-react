@@ -1,0 +1,44 @@
+.form {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: flex-start;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+
+    // header component
+    &-header {
+        background-color: darkgray;
+        border: 1px solid red;
+
+        order: 0;
+        flex: 1 1 auto;
+        align-self: auto;
+
+
+        // details component
+        &-details {
+            background-color: lightgray;
+            border: 1px solid blue;
+
+
+        }
+    }
+    
+    // map component
+    &-map {
+        background-color: gray;
+        border: 1px solid red;
+
+        order: 0;
+        flex: 2 1 auto;
+        align-self: auto;
+
+    }
+
+
+
+}
