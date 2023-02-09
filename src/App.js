@@ -1,11 +1,13 @@
 import React from "react";
 import Form from "./components/Form";
+import MyContextProvider from "./contexts/MyContextProvider";
 
 function App() {
+
   return (
-    <div>
+    <MyContextProvider>
       <Form />
-    </div>
+    </MyContextProvider>
   );
 }
 

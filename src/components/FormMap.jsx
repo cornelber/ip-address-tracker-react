@@ -8,16 +8,15 @@ const ZOOM_LEVEL = 9;
 
 
 const FormMap = () => {
-  const temporaryCenter = [40.650002, -73.949997];
+    const temporaryCenter = [40.650002, -73.949997];
 
-
-  return (
-    <div className='form-map'>
-      <MapContainer center={temporaryCenter} zoom={ZOOM_LEVEL} >
-        <TileLayer attribution={TILE_ATTRIBUTION} url={TILE_URL} />
-      </MapContainer>
-    </div>
-  )
+    return (
+        <div className='form-map'>
+        <MapContainer center={temporaryCenter} zoom={ZOOM_LEVEL} >
+            <TileLayer attribution={TILE_ATTRIBUTION} url={TILE_URL} />
+        </MapContainer>
+        </div>
+    )
 }
 
 export default FormMap

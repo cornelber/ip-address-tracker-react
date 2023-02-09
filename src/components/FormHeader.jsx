@@ -15,6 +15,9 @@ const FormHeader = (props) => {
     e.preventDefault();
 
     handleIPAddress(inputValue)
+    
+    // reset input value
+    setInputValue('')
   }
 
   // save input value
@@ -25,18 +28,18 @@ const FormHeader = (props) => {
   return (
     <div className='form-header'>
         <form id='form' onSubmit={handleSubmit}>
-          <h1 className='form-title'>IP Address Tracker</h1>
-          <div className="input-wrapper">
+        <h1 className='form-title'>IP Address Tracker</h1>
+        <div className="input-wrapper">
             <input 
-              className='form-input' 
-              type={INPUT_TYPE} 
-              // pattern={INPUT_PATTERN} 
-              placeholder={INPUT_PLACEHOLDER} 
-              value={inputValue}
-              onChange={handleInputValue} 
+            className='form-input' 
+            type={INPUT_TYPE} 
+            // pattern={INPUT_PATTERN} 
+            placeholder={INPUT_PLACEHOLDER} 
+            value={inputValue}
+            onChange={handleInputValue} 
             />
             <button className='btn form-btn' type={BUTTON_TYPE} />
-          </div>
+        </div>
         </form>
         <FormDetails />
     </div>
