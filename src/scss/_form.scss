@@ -1,7 +1,6 @@
 .form {
     width: 100vw;
     height: 100vh;
-
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -11,34 +10,209 @@
 
     // header component
     &-header {
-        background-color: darkgray;
-        border: 1px solid red;
+        background-image: url('../assets/pattern-bg.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
 
+        position: relative;
         order: 0;
         flex: 1 1 auto;
         align-self: auto;
+        max-height: 28rem;
+        min-height: 28rem;
 
+        // #form
+        #form {
+            display: flex;
+            flex-direction: column;
+            padding: 3rem 2rem 0 2rem;
+            margin: 0 auto;
+
+            .form-title {
+                @include mobile() {
+                    font-size: 2.6rem;
+                }
+
+                @include primary-typography;
+                color: $white;
+                text-align: center;
+                padding-bottom: 3rem;
+
+            }
+
+            .input-wrapper {
+                display: flex;
+                justify-content: center;
+            }
+
+            .form-input {
+                max-width: 50rem;
+                width: 100%;
+                height: 5.8rem;
+                border-radius: 1.5rem 0 0 1.5rem;
+                padding: 1.8rem 2.4rem;
+
+                &::placeholder {
+                    font-size: 1.8rem;
+                    line-height: 2rem;
+                    color: $dark-grey;
+                    opacity: 0.5;
+                }
+    
+                &[type='text'] {
+                    font-size: 1.8rem;
+                    line-height: 2rem;
+                    color: $very-dark-grey;
+                }
+            }
+
+            .form-btn {
+                position: relative;
+                width: 5.8rem;
+                height: 5.8rem;
+                background-color: $black;
+                border-radius: 0px 1.5rem 1.5rem 0px;
+                transition: background-color .35s ease-in-out;
+        
+                &::before {
+                    content: url('../assets/icon-arrow.svg');
+                    width: 11px;
+                    height: 14px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+        
+                &:hover {
+                    background-color: $btn-hover;
+                }
+            }
+        }
 
         // details component
         &-details {
-            background-color: lightgray;
-            border: 1px solid blue;
+            @include tablet() {
+                transform: translateY(70%);
+            }
+
+            position: absolute;
+            max-width: 115rem;
+            width: 100%;
+            min-height: 16rem;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(50%);
+            margin: auto;
+            box-shadow: 0px 50px 50px -25px $primary-shadow;
+            z-index: 100;
 
 
+            .deatils-wrapper {
+                @include tablet() {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                @include mobile() {
+                    grid-template-columns: repeat(1, 1fr);
+                    text-align: center;
+                }
+
+                background-color: $white;
+                border-radius: 1.5rem;
+                margin: 0 2rem 0 2rem;
+                min-height: 16rem;
+                display: grid;
+                grid-template-columns: repeat(4, minmax(24rem, 1fr));
+
+
+                .details-block {
+                    @include tablet() {
+                        padding: 2rem 3rem;
+
+                        &:nth-child(3) {
+                            &::before {
+                                all: initial;
+                            }                           
+                        }
+                    }
+
+                    @include mobile() {
+                        padding: 2.4rem 2.4rem 0;
+
+                        &:not(:first-child) {
+                            &::before {
+                                width: 3px;
+                            }
+                        }
+
+                        &:last-child {
+                            padding-bottom: 2.4rem;
+                        }
+                    }
+
+                    position: relative;
+                    padding: 3.6rem 3.2rem;
+
+                    &:not(:first-child) {
+                        &::before {
+                            content: '';
+                            height: 7.4rem;
+                            width: 0.2rem;
+                            background-color: $black;
+                            position: absolute;
+                            left: 0;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            opacity: 0.15;
+                        }
+                    }
+
+                    &-title {
+                        @include mobile() {
+                            font-size: 1rem;
+                            padding-bottom: 0.6rem;
+                        }
+
+                        @include secondary-typography;
+                        color: $dark-grey;
+                        text-transform: uppercase;
+                        padding-bottom: 1.4rem;
+
+                    }
+
+                    &-info {
+                        @include mobile() {
+                            font-size: 2rem;
+                        }
+
+                        @include details-typography;
+                        color: $black;
+
+                    }
+                }
+            }
         }
     }
     
     // map component
     &-map {
-        background-color: gray;
-        border: 1px solid red;
-
+        position: relative;
         order: 0;
         flex: 2 1 auto;
         align-self: auto;
+        z-index: 50;
 
+        // leaflet-react
+        .leaflet-container {
+            width: 100%;
+            height: 100vh;
+
+            .leaflet-control-zoom {
+                display: none;
+            }
+        }
     }
-
-
-
 }
