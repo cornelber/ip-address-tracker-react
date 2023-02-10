@@ -6,17 +6,18 @@ export const getIPAddressDetails = (apiResponse) => {
     const rawIPAddressDetails = apiResponse;
     
     const adaptedIPAddressDetails = {
-        ip: rawIPAddressDetails?.query,
+        status: rawIPAddressDetails.status,
+        ip: rawIPAddressDetails.query,
         location: {
-            country: rawIPAddressDetails?.country,
             city: rawIPAddressDetails?.city,
+            country: rawIPAddressDetails?.countryCode,
             zip: rawIPAddressDetails?.zip,
         },
         coordinates: {
             lat: rawIPAddressDetails?.lat,
             lng: rawIPAddressDetails?.lon
         },
-        timezone: rawIPAddressDetails?.timezone,
+        utc: rawIPAddressDetails?.offset,
         isp: rawIPAddressDetails?.isp,
     }
 

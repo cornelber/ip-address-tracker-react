@@ -1,9 +1,9 @@
-export const getIPAddressEndpoint = (address) => {
+const FIELDS_API = 'status,countryCode,city,zip,lat,lon,offset,isp,query'
 
-    // validation
+export const getIPAddressEndpoint = (address) => {
     if (address === '') {
         return '';
     }
 
-    return `http://ip-api.com/json/${address}`
+    return `http://ip-api.com/json/${address}?fields=${FIELDS_API}`
 }

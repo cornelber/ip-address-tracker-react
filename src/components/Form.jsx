@@ -9,18 +9,18 @@ import FormMap from './FormMap'
 const Form = () => {
     const [ipAddress, setIpAddress] = useState('');
     const { setValue } = useContext(MyContext);
-    const [contextValueSet, setContextValueSet] = useState(false);
 
     const ipAddressEndpoint = getIPAddressEndpoint(ipAddress);
     const addressData = useFetch(ipAddressEndpoint)
     const adaptedAddressData = getIPAddressDetails(addressData);
 
+    const isValidIPAddress = adaptedAddressData.status === 'success'
+    
     useEffect(() => {
-        if (!contextValueSet && Object.keys(adaptedAddressData).length !== 0) {
+        if (Object.keys(adaptedAddressData).length !== 0 && isValidIPAddress) {
             setValue(adaptedAddressData);
-            setContextValueSet(true);
         }
-    }, [adaptedAddressData]);
+    }, [adaptedAddressData.ip]);
 
     const handleIPAddress = (inputValue) => {
         setIpAddress(inputValue)
@@ -28,7 +28,7 @@ const Form = () => {
 
     return (
         <div className='form'>
-            <FormHeader handleIPAddress={handleIPAddress}  />
+            <FormHeader handleIPAddress={handleIPAddress} />
             <FormMap />
         </div>
     )
@@ -37,9 +37,10 @@ const Form = () => {
 export default Form
 
 /*
-NOTES:
+TODO:
 
-handleIPAddress takes input value from FormHeader.jsx
-ipAddress save input value and should call API with filled IP 
-
+catch err api,
+show alert on err,
+fixed headerDetails to not jump when content changed
+add additional features to FormMap 
 */

@@ -14,6 +14,7 @@ const FormHeader = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // sent input value to parent component
     handleIPAddress(inputValue)
     
     // reset input value

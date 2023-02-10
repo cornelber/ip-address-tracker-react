@@ -14,6 +14,7 @@ export const useFetch = (url) => {
 				setData(jsonData)
 			})
 		)
+        
 	}, [url])
 
     return data;
