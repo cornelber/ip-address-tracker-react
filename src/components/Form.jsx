@@ -1,30 +1,37 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { getIPAddressDetails } from '../api/adaptors'
 import { getIPAddressEndpoint } from '../api/endpoint'
-import { useFetch } from '../utils/hooks/useFetch'
+import { useFetch } from '../hooks/useFetch'
 import { MyContext } from '../contexts/MyContextProvider'
 import FormHeader from './FormHeader'
 import FormMap from './FormMap'
 
 const Form = () => {
     const [ipAddress, setIpAddress] = useState('');
-    const { setValue } = useContext(MyContext);
+    const { setAddressDetails } = useContext(MyContext);
 
     const ipAddressEndpoint = getIPAddressEndpoint(ipAddress);
     const addressData = useFetch(ipAddressEndpoint)
-    const adaptedAddressData = getIPAddressDetails(addressData);
+    const adaptedAddressData = getIPAddressDetails(addressData.data);
 
     const isValidIPAddress = adaptedAddressData.status === 'success'
-    
+
     useEffect(() => {
         if (Object.keys(adaptedAddressData).length !== 0 && isValidIPAddress) {
-            setValue(adaptedAddressData);
+            setAddressDetails({
+                ip: adaptedAddressData.ip,
+                city: adaptedAddressData.location.city,
+                country: adaptedAddressData.location.country,
+                zip: adaptedAddressData.location.zip,
+                utc: adaptedAddressData.utc,
+                isp: adaptedAddressData.isp,
+            });
         }
     }, [adaptedAddressData.ip]);
 
     const handleIPAddress = (inputValue) => {
         setIpAddress(inputValue)
-    }
+    }    
 
     return (
         <div className='form'>
