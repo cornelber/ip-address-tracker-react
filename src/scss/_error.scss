@@ -1,0 +1,54 @@
+.error-modal {
+    position: absolute;
+    bottom: 2rem;
+    left: 5rem;
+    max-width: 70rem;
+    width: 100%;
+    background-color: $error;
+    border-radius: 1.5rem;
+    padding: 2rem 4rem;
+    z-index: 1000;
+    opacity: 0.9;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: box-shadow .5s ease-in-out;
+    animation: moveInOut 0.5s ease-in-out forwards;
+
+    .error-info {
+        @include error-typography;
+        text-align: center;
+        color: $white;
+    }
+
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    @include tablet() {
+        left:50%;
+        transform: translateX(-50%);
+        max-width: unset;
+        width: 90%;
+        animation: moveInOutTablet 0.5s ease-in-out forwards;
+    }
+}
+
+@keyframes moveInOut {
+    0% {
+        left: -50%;
+    }
+    100% {
+        left: 5rem;
+    }
+}
+
+@keyframes moveInOutTablet {
+    0% {
+        left: -100%;
+    }
+    50% {
+        left: -50%;
+    }
+    100% {
+        left: 50%;
+    }
+}
