@@ -1,20 +1,21 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { getIPAddressDetails } from '../api/adaptors'
-import { getIPAddressEndpoint } from '../api/endpoint'
+import { getIPAddressDetails } from '../common/api/adaptors'
+import { getIPAddressEndpoint } from '../common/api/endpoint'
 import { useFetch } from '../hooks/useFetch'
 import { MyContext } from '../contexts/MyContextProvider'
 import FormHeader from './FormHeader'
 import FormMap from './FormMap'
+import ErrorModal from './ErrorModal'
 
 const Form = () => {
     const [ipAddress, setIpAddress] = useState('');
-    const { setAddressDetails } = useContext(MyContext);
+    const { setAddressDetails, setAddressCords } = useContext(MyContext);
 
     const ipAddressEndpoint = getIPAddressEndpoint(ipAddress);
     const addressData = useFetch(ipAddressEndpoint)
     const adaptedAddressData = getIPAddressDetails(addressData.data);
-
-    const isValidIPAddress = adaptedAddressData.status === 'success'
+    
+    const isValidIPAddress = !adaptedAddressData.status || adaptedAddressData.status === 'success'
 
     useEffect(() => {
         if (Object.keys(adaptedAddressData).length !== 0 && isValidIPAddress) {
@@ -26,8 +27,12 @@ const Form = () => {
                 utc: adaptedAddressData.utc,
                 isp: adaptedAddressData.isp,
             });
+            setAddressCords({
+                lat: adaptedAddressData.coordinates.lat,
+                lng: adaptedAddressData.coordinates.lng,
+            });
         }
-    }, [adaptedAddressData.ip]);
+    }, [adaptedAddressData.ip, isValidIPAddress, setAddressCords, setAddressDetails]);
 
     const handleIPAddress = (inputValue) => {
         setIpAddress(inputValue)
@@ -35,6 +40,7 @@ const Form = () => {
 
     return (
         <div className='form'>
+            <ErrorModal isValidIPAddress={isValidIPAddress} />
             <FormHeader handleIPAddress={handleIPAddress} />
             <FormMap />
         </div>
@@ -46,8 +52,7 @@ export default Form
 /*
 TODO:
 
-catch err api,
-show alert on err,
-fixed headerDetails to not jump when content changed
-add additional features to FormMap 
+-add loading functionality,
+-refactor scss
+-refactor code
 */

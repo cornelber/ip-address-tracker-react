@@ -4,16 +4,14 @@ import { MyContext } from '../contexts/MyContextProvider'
 import FormDetailsBlock from './FormDetailsBlock'
 
 const FormDetails = () => {
-    const { addressDetails } = useContext(MyContext)
-    const [initialRender, setInitialRender] = useState(true)
+    const { addressDetails } = useContext(MyContext);
+    const [initialRender, setInitialRender] = useState(true);
     const [utc, setUtc] = useState(`UTC ${addressDetails.utc}`)
+    
+    const { ip, isp, city, country, zip } = addressDetails
+    const location = `${city}, ${country} ${zip}`
 
-    const ip = addressDetails.ip
-    const isp = addressDetails.isp
-    const location = `${addressDetails.city}, ${addressDetails.country} ${addressDetails.zip}`
-
-    // ignore first render for utc var, for next values 
-    // update through convertOffsetToHours() function
+    // Update the second timezone variable using useEffect hook
     useEffect(() => {
         if(!initialRender) {
             setUtc(convertOffsetToHours(addressDetails.utc))
