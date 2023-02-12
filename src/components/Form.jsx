@@ -6,19 +6,27 @@ import { MyContext } from '../contexts/MyContextProvider'
 import FormHeader from './FormHeader'
 import FormMap from './FormMap'
 import ErrorModal from './ErrorModal'
+import Loading from './Loading'
 
 const Form = () => {
-    const [ipAddress, setIpAddress] = useState('');
     const { setAddressDetails, setAddressCords } = useContext(MyContext);
+    const [ipAddress, setIpAddress] = useState('');
+    const [showLoading, setShowLoading] = useState(true);
 
     const ipAddressEndpoint = getIPAddressEndpoint(ipAddress);
-    const addressData = useFetch(ipAddressEndpoint)
-    const adaptedAddressData = getIPAddressDetails(addressData.data);
-    
+    const { data, loading } = useFetch(ipAddressEndpoint)
+    const adaptedAddressData = getIPAddressDetails(data);
+
     const isValidIPAddress = !adaptedAddressData.status || adaptedAddressData.status === 'success'
+    const hasAddressData = Object.keys(adaptedAddressData).length !== 0;
+
 
     useEffect(() => {
-        if (Object.keys(adaptedAddressData).length !== 0 && isValidIPAddress) {
+        setTimeout(() => {
+            setShowLoading(false)
+        }, 2000)
+        // update context values if hasAddressData is not empty and ip address is valid
+        if (hasAddressData && isValidIPAddress) {
             setAddressDetails({
                 ip: adaptedAddressData.ip,
                 city: adaptedAddressData.location.city,
@@ -32,27 +40,27 @@ const Form = () => {
                 lng: adaptedAddressData.coordinates.lng,
             });
         }
-    }, [adaptedAddressData.ip, isValidIPAddress, setAddressCords, setAddressDetails]);
+    }, [adaptedAddressData.ip, isValidIPAddress, hasAddressData, setAddressCords, setAddressDetails]);
 
-    const handleIPAddress = (inputValue) => {
-        setIpAddress(inputValue)
-    }    
+    const handleIPAddress = (inputValue) => setIpAddress(inputValue)
 
     return (
         <div className='form'>
-            <ErrorModal isValidIPAddress={isValidIPAddress} />
-            <FormHeader handleIPAddress={handleIPAddress} />
-            <FormMap />
+            {
+                showLoading ? (
+                    <Loading />
+                    ) : (
+                        <>
+                            {loading && <Loading />}
+                            <ErrorModal isValidIPAddress={isValidIPAddress} />
+                            <FormHeader handleIPAddress={handleIPAddress} />
+                            <FormMap />
+                        </>
+                )
+            }
         </div>
     )
 }
 
 export default Form
 
-/*
-TODO:
-
--add loading functionality,
--refactor scss
--refactor code
-*/

@@ -10,8 +10,11 @@ export const useFetch = (url) => {
             try {
                 const response = await fetch(url)
                 const data = await response.json();
-                setData(data)
-                setLoading(false)
+                setTimeout(() => {
+                    setData(data)
+                    setLoading(false)
+                }, 2000)
+                setLoading(true)
             } catch (err) {
                 setError(err)
                 setLoading(false)
