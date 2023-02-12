@@ -159,7 +159,7 @@
                     &:not(:first-child) {
                         &::before {
                             content: '';
-                            height: 7.4rem;
+                            height: 50%;
                             width: 0.2rem;
                             background-color: $black;
                             position: absolute;
